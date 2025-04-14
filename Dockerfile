@@ -1,27 +1,27 @@
-# Using official Python image
-FROM python:3.13-slim
+# Use official Python image
+FROM python:3.12-slim
 
-# Creating a non-root user
+# Create non-root user
 RUN adduser --disabled-password --gecos "" user11
 
-# Setting working directory
+# Set working directory
 WORKDIR /app
 
-# Copying requirement file and installing dependencies
+# Copy requirements and install
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copying application code
+# Copy app code
 COPY app.py .
 
-# Changing ownership to non-root user
+# Change ownership
 RUN chown -R user11:user11 /app
 
-# Switching to non-root user
+# Switch to non-root user
 USER user11
 
-# Exposing port
+# Expose Flask port
 EXPOSE 5000
 
-# Running the app
+# Run app
 CMD ["python", "app.py"]
